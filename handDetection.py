@@ -4,7 +4,7 @@ import math
 from scipy.signal import argrelextrema
 
 #ucitavanje slike i resizovanje
-img = cv2.imread('a14.jpg')
+img = cv2.imread('a5.jpg')
 resized = cv2.resize(img, (512, 512), cv2.INTER_LINEAR)
 
 #hsv i treshold
@@ -219,81 +219,87 @@ def koordinateZicaPragova():
     print('STRINGS: ', strings)
     print(fret3, fret2, fret1)
 
-for ft in fingerTips:
-    if ft[0] > fret3 and ft[0] < fret2:
-        if ft[1] <= strings[5]:
-            tonovi.append("G")
-        elif ft[1] > strings[5] and ft[1] <= strings[4]:
-            tonovi.append("C")
-        elif ft[1] > strings[4] and ft[1] <= strings[3]:
-            tonovi.append("F")
-        elif ft[1] > strings[3] and ft[1] <= strings[2]:
-            tonovi.append("B")
-        elif ft[1] > strings[2] and ft[1] <= strings[1]:
-            tonovi.append("D")
-        elif ft[1] > strings[1] and ft[1] <= strings[0]:
-            tonovi.append("G")
-    elif ft[0] > fret2 and ft[0] < fret1:
-        if ft[1] <= strings[5]:
-            tonovi.append("F#")
-        elif ft[1] > strings[5] and ft[1] <= strings[4]:
-            tonovi.append("H")
-        elif ft[1] > strings[4] and ft[1] <= strings[3]:
-            tonovi.append("E")
-        elif ft[1] > strings[3] and ft[1] <= strings[2]:
-            tonovi.append("A")
-        elif ft[1] > strings[2] and ft[1] <= strings[1]:
-            tonovi.append("C#")
-        elif ft[1] > strings[1] and ft[1] <= strings[0]:
-            tonovi.append("F#")
-    elif ft[0] > fret1:
-        if ft[1] <= strings[5]:
-            tonovi.append("F")
-        elif ft[1] > strings[5] and ft[1] <= strings[4]:
-            tonovi.append("B")
-        elif ft[1] > strings[4] and ft[1] <= strings[3]:
-            tonovi.append("D#")
-        elif ft[1] > strings[3] and ft[1] <= strings[2]:
-            tonovi.append("G#")
-        elif ft[1] > strings[2] and ft[1] <= strings[1]:
-            tonovi.append("C")
-        elif ft[1] > strings[1] and ft[1] <= strings[0]:
-            tonovi.append("F")
+akordi = []
+
+if len(strings) > 5:
+    for ft in fingerTips:
+        if ft[0] > fret3 and ft[0] < fret2:
+            if ft[1] <= strings[5]:
+                tonovi.append("G")
+            elif ft[1] > strings[5] and ft[1] <= strings[4]:
+                tonovi.append("C")
+            elif ft[1] > strings[4] and ft[1] <= strings[3]:
+                tonovi.append("F")
+            elif ft[1] > strings[3] and ft[1] <= strings[2]:
+                tonovi.append("B")
+            elif ft[1] > strings[2] and ft[1] <= strings[1]:
+                tonovi.append("D")
+            elif ft[1] > strings[1] and ft[1] <= strings[0]:
+                tonovi.append("G")
+        elif ft[0] > fret2 and ft[0] < fret1:
+            if ft[1] <= strings[5]:
+                tonovi.append("F#")
+            elif ft[1] > strings[5] and ft[1] <= strings[4]:
+                tonovi.append("H")
+            elif ft[1] > strings[4] and ft[1] <= strings[3]:
+                tonovi.append("E")
+            elif ft[1] > strings[3] and ft[1] <= strings[2]:
+                tonovi.append("A")
+            elif ft[1] > strings[2] and ft[1] <= strings[1]:
+                tonovi.append("C#")
+            elif ft[1] > strings[1] and ft[1] <= strings[0]:
+                tonovi.append("F#")
+        elif ft[0] > fret1:
+            if ft[1] <= strings[5]:
+                tonovi.append("F")
+            elif ft[1] > strings[5] and ft[1] <= strings[4]:
+                tonovi.append("B")
+            elif ft[1] > strings[4] and ft[1] <= strings[3]:
+                tonovi.append("D#")
+            elif ft[1] > strings[3] and ft[1] <= strings[2]:
+                tonovi.append("G#")
+            elif ft[1] > strings[2] and ft[1] <= strings[1]:
+                tonovi.append("C")
+            elif ft[1] > strings[1] and ft[1] <= strings[0]:
+                tonovi.append("F")
+else:
+    akordi.append("Nedovoljno prepoznatih zica!")
 
 def ispisiTonove(tonovi):
     tonovi = list(dict.fromkeys(tonovi)) #izbaci duplikate
     print(tonovi)
 
 #koji akord je u pitanju na osnovu tonova
-akord = ""
 
-if "C" in tonovi and "E" in tonovi:
-    akord = "C dur"
-elif "A" in tonovi and "C#" in tonovi and "E" in tonovi:
-    akord = "A dur"
-elif "F" in tonovi and "C" in tonovi and "A" in tonovi:
-    akord = "F dur"
-elif "G" in tonovi and "H" in tonovi and "D" in tonovi:
-    akord = "G dur"
-elif "E" in tonovi and "G#" in tonovi and "H" in tonovi:
-    akord = "E dur"
-elif "D" in tonovi and "F#" in tonovi and "A" in tonovi:
-    akord = "D dur"
-elif "A" in tonovi and "C" in tonovi and "E" in tonovi:
-    akord = "A mol"
-elif "E" in tonovi and "H" in tonovi:
-    akord = "E mol"
-elif "D" in tonovi and "A" in tonovi and "F" in tonovi:
-    akord = "D mol"
-elif "B" in tonovi and "F" in tonovi:
-    akord = "B dur"
-elif "B" in tonovi and "F" in tonovi and "C#" in tonovi:
-    akord = "B mol"
-else
-    akord = "Akord nije prepoznat"
+if len(tonovi) > 0:
+    if "C" in tonovi and "E" in tonovi:
+        akordi.append("C dur")
+    elif "A" in tonovi and "C#" in tonovi and "E" in tonovi:
+        akordi.append("A dur")
+    elif "F" in tonovi and "C" in tonovi and "A" in tonovi:
+        akordi.append("F dur")
+    elif "G" in tonovi and "H" in tonovi and "D" in tonovi:
+        akordi.append("G dur")
+    elif "E" in tonovi and "G#" in tonovi and "H" in tonovi:
+        akordi.append("E dur")
+    elif "D" in tonovi and "F#" in tonovi and "A" in tonovi:
+        akordi.append("D dur")
+    elif "A" in tonovi and "C" in tonovi and "E" in tonovi:
+        akordi.append("A mol")
+    elif "E" in tonovi and "H" in tonovi:
+        akordi.append("E mol")
+    elif "D" in tonovi and "A" in tonovi and "F" in tonovi:
+        akordi.append("D mol")
+    elif "B" in tonovi and "F" in tonovi:
+        akordi.append("B dur")
+    elif "B" in tonovi and "F" in tonovi and "C#" in tonovi:
+        akordi.append("B mol")
+    else:
+        akordi.append("Akord nije prepoznat")
+
 
 #ispisiTonove(tonovi)
 #prikaziZicePragove()
 #koordinateZicaPragova()
-#prikaziKonturu()
-print(akord)
+prikaziKonturu()
+print(akordi)
